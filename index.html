@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="pt-BR" class="h-100" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Sistema de Gestão de Vendas" />
+    <meta name="author" content="Seu Nome" />
+    <title>Sistema de Vendas</title>
+    <script src="assets/js/color-modes.js"></script>
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="sticky-footer-navbar.css" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
+  </head>
+  <body class="d-flex flex-column h-100">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">📊 Sistema de Vendas</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="clienteNav" role="button" data-bs-toggle="dropdown">
+                👥 Clientes
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="clienteNav">
+                <li><a class="dropdown-item" href="cadastrar_cliente.html">Novo Cliente</a></li>
+                <li><a class="dropdown-item" href="listar_clientes.html">Listar Clientes</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="produtoNav" role="button" data-bs-toggle="dropdown">
+                📦 Produtos
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="produtoNav">
+                <li><a class="dropdown-item" href="cadastrar_produto.html">Novo Produto</a></li>
+                <li><a class="dropdown-item" href="listar_produto.html">Listar Produtos</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="pedidoNav" role="button" data-bs-toggle="dropdown">
+                🛒 Pedidos
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="pedidoNav">
+                <li><a class="dropdown-item" href="cadastrar_pedido.html">Novo Pedido</a></li>
+                <li><a class="dropdown-item" href="listar_pedido.html">Listar Pedidos</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-shrink-0">
+      <div class="container py-5">
+        <div class="row mb-4">
+          <div class="col-12">
+            <h1 class="display-4">Bem-vindo ao Sistema de Gestão de Vendas</h1>
+            <p class="lead">Sistema de gestão de vendas para gerenciar clientes, produtos e pedidos.</p>
+          </div>
+        </div>
+
+        <!-- Cards de Resumo -->
+        <div class="row">
+          <div class="col-md-3 mb-4">
+            <div class="card bg-primary text-white">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="card-title">Total de Clientes</h6>
+                    <h3 id="totalClientes">0</h3>
+                  </div>
+                  <div class="fs-1">👥</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="card bg-success text-white">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="card-title">Total de Produtos</h6>
+                    <h3 id="totalProdutos">0</h3>
+                  </div>
+                  <div class="fs-1">📦</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="card bg-warning text-white">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="card-title">Total de Pedidos</h6>
+                    <h3 id="totalPedidos">0</h3>
+                  </div>
+                  <div class="fs-1">🛒</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="card bg-info text-white">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="card-title">Valor Total de Vendas</h6>
+                    <h3 id="valorTotal">R$ 0,00</h3>
+                  </div>
+                  <div class="fs-1">💰</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ações Rápidas -->
+        <div class="row mt-5">
+          <div class="col-12">
+            <h2>Ações Rápidas</h2>
+          </div>
+          <div class="col-md-4 mb-3">
+            <a href="cadastrar_cliente.html" class="btn btn-primary w-100 py-3">
+              <i class="bi bi-plus"></i> Novo Cliente
+            </a>
+          </div>
+          <div class="col-md-4 mb-3">
+            <a href="cadastrar_produto.html" class="btn btn-success w-100 py-3">
+              <i class="bi bi-plus"></i> Novo Produto
+            </a>
+          </div>
+          <div class="col-md-4 mb-3">
+            <a href="cadastrar_pedido.html" class="btn btn-warning w-100 py-3">
+              <i class="bi bi-plus"></i> Novo Pedido
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-body-tertiary">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <span class="text-body-secondary">&copy; 2026 Sistema de Vendas. Todos os direitos reservados.</span>
+          </div>
+          <div class="col-md-6 text-end">
+            <span class="text-body-secondary">@DudsTheDog</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+      // Atualizar dashboard ao carregar
+      document.addEventListener('DOMContentLoaded', function() {
+        atualizarDashboard();
+      });
+
+      function atualizarDashboard() {
+        const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+        const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+        const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+        
+        document.getElementById('totalClientes').textContent = clientes.length;
+        document.getElementById('totalProdutos').textContent = produtos.length;
+        document.getElementById('totalPedidos').textContent = pedidos.length;
+        
+        let valorTotal = 0;
+        pedidos.forEach(pedido => {
+          valorTotal += parseFloat(pedido.total || 0);
+        });
+        document.getElementById('valorTotal').textContent = 'R$ ' + valorTotal.toFixed(2).replace('.', ',');
+      }
+    </script>
+  </body>
+</html>
