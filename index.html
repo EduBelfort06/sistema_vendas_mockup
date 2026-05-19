@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Sistema de Gestão de Vendas" />
     <meta name="author" content="Seu Nome" />
-    <title>Sistema de Vendas</title>
+    <title> Sistema de Vendas</title>
     <script src="assets/js/color-modes.js"></script>
     <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
@@ -16,7 +16,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">📊 Sistema de Vendas</a>
+        <a class="navbar-brand" href="index.html">🏪 Lojinha</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -34,34 +34,38 @@
               <a class="nav-link dropdown-toggle" href="#" id="clienteNav" role="button" data-bs-toggle="dropdown">
                 👥 Clientes
               </a>
-              <ul class="dropdown-menu" aria-labelledby="clienteNav">
-                <li><a class="dropdown-item" href="cadastrar_cliente.html">Novo Cliente</a></li>
-                <li><a class="dropdown-item" href="listar_clientes.html">Listar Clientes</a></li>
+                <ul class="dropdown-menu" aria-labelledby="clienteNav">
+                <li><a class="dropdown-item" href="pages/cadastro/cadastrar_cliente.html">Novo Cliente</a></li>
+                <li><a class="dropdown-item" href="pages/listas/listar_clientes.html">Listar Clientes</a></li>
               </ul>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="produtoNav" role="button" data-bs-toggle="dropdown">
                 📦 Produtos
               </a>
-              <ul class="dropdown-menu" aria-labelledby="produtoNav">
-                <li><a class="dropdown-item" href="cadastrar_produto.html">Novo Produto</a></li>
-                <li><a class="dropdown-item" href="listar_produto.html">Listar Produtos</a></li>
+                <ul class="dropdown-menu" aria-labelledby="produtoNav">
+                <li><a class="dropdown-item" href="pages/cadastro/cadastrar_produto.html">Novo Produto</a></li>
+                <li><a class="dropdown-item" href="pages/listas/listar_produto.html">Listar Produtos</a></li>
               </ul>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="pedidoNav" role="button" data-bs-toggle="dropdown">
                 🛒 Pedidos
               </a>
-              <ul class="dropdown-menu" aria-labelledby="pedidoNav">
-                <li><a class="dropdown-item" href="cadastrar_pedido.html">Novo Pedido</a></li>
-                <li><a class="dropdown-item" href="listar_pedido.html">Listar Pedidos</a></li>
+                <ul class="dropdown-menu" aria-labelledby="pedidoNav">
+                <li><a class="dropdown-item" href="pages/cadastro/cadastrar_pedido.html">Novo Pedido</a></li>
+                <li><a class="dropdown-item" href="pages/listas/listar_pedido.html">Listar Pedidos</a></li>
               </ul>
             </li>
-            <li class="nav-item ms-2">
-              <button id="theme-toggle-btn" class="btn btn-light" title="Alternar tema">
-                <i class="bi bi-moon-fill"></i>
-                <span class="theme-text d-none d-md-inline">Escuro</span>
+            <li class="nav-item ms-2 dropdown">
+              <button id="theme-toggle-btn" class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Selecionar tema">
+                <i class="bi bi-sun-fill"></i>
+                <span class="theme-text d-none d-md-inline">Claro</span>
               </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><button class="dropdown-item theme-option" type="button" data-theme="light"><i class="bi bi-sun-fill me-2"></i> Claro</button></li>
+                <li><button class="dropdown-item theme-option" type="button" data-theme="dark"><i class="bi bi-moon-fill me-2"></i> Escuro</button></li>
+              </ul>
             </li>
           </ul>
         </div>
@@ -73,7 +77,7 @@
       <div class="container py-5">
         <div class="row mb-4">
           <div class="col-12">
-            <h1 class="display-4">Bem-vindo ao Sistema de Gestão de Vendas</h1>
+            <h1 class="display-4">Bem-vindo a Lojinha do Duds</h1>
             <p class="lead">Sistema de gestão de vendas para gerenciar clientes, produtos e pedidos.</p>
           </div>
         </div>
@@ -81,7 +85,7 @@
         <!-- Cards de Resumo -->
         <div class="row">
           <div class="col-md-3 mb-4">
-            <div class="card bg-primary text-white">
+            <div class="card card-accent-clientes text-white">
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
@@ -94,7 +98,7 @@
             </div>
           </div>
           <div class="col-md-3 mb-4">
-            <div class="card bg-success text-white">
+            <div class="card card-accent-produtos text-white">
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
@@ -107,7 +111,7 @@
             </div>
           </div>
           <div class="col-md-3 mb-4">
-            <div class="card bg-warning text-white">
+            <div class="card card-accent-pedidos text-white">
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
@@ -120,14 +124,14 @@
             </div>
           </div>
           <div class="col-md-3 mb-4">
-            <div class="card bg-info text-white">
+            <div class="card card-accent-vendas text-white">
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
                     <h6 class="card-title">Valor Total de Vendas</h6>
                     <h3 id="valorTotal">R$ 0,00</h3>
                   </div>
-                  <div class="fs-1">💰</div>
+                  <div class="fs-1">💵</div>
                 </div>
               </div>
             </div>
@@ -139,18 +143,18 @@
           <div class="col-12">
             <h2>Ações Rápidas</h2>
           </div>
-          <div class="col-md-4 mb-3">
-            <a href="cadastrar_cliente.html" class="btn btn-primary w-100 py-3">
+            <div class="col-md-4 mb-3">
+            <a href="pages/cadastro/cadastrar_cliente.html" class="btn btn-primary w-100 py-3">
               <i class="bi bi-plus"></i> Novo Cliente
             </a>
           </div>
           <div class="col-md-4 mb-3">
-            <a href="cadastrar_produto.html" class="btn btn-success w-100 py-3">
+            <a href="pages/cadastro/cadastrar_produto.html" class="btn btn-primary w-100 py-3">
               <i class="bi bi-plus"></i> Novo Produto
             </a>
           </div>
           <div class="col-md-4 mb-3">
-            <a href="cadastrar_pedido.html" class="btn btn-warning w-100 py-3">
+            <a href="pages/cadastro/cadastrar_pedido.html" class="btn btn-primary w-100 py-3">
               <i class="bi bi-plus"></i> Novo Pedido
             </a>
           </div>

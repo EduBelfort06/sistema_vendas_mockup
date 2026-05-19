@@ -41,10 +41,11 @@
     updateThemeButton: function(theme) {
       const btn = document.getElementById('theme-toggle-btn')
       if (!btn) return
-      
+
       const icon = btn.querySelector('i')
       const text = btn.querySelector('.theme-text')
-      
+      const options = document.querySelectorAll('.theme-option')
+
       if (theme === this.DARK) {
         btn.classList.add('btn-dark')
         btn.classList.remove('btn-light')
@@ -56,6 +57,10 @@
         if (icon) icon.className = 'bi bi-sun-fill'
         if (text) text.textContent = 'Claro'
       }
+
+      options.forEach(option => {
+        option.classList.toggle('active', option.dataset.theme === theme)
+      })
     },
     
     dispatchThemeChangeEvent: function(theme) {
@@ -69,12 +74,18 @@
   // Expor globalmente para uso em outros scripts
   window.ThemeManager = ThemeManager
   
-  // Listener para botão de alternância
+  // Listener para dropdown de tema
   document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('theme-toggle-btn')
-    if (btn) {
-      btn.addEventListener('click', () => ThemeManager.toggleTheme())
-    }
+    const options = document.querySelectorAll('.theme-option')
+    options.forEach(option => {
+      option.addEventListener('click', () => {
+        const selectedTheme = option.dataset.theme
+        if (selectedTheme) {
+          ThemeManager.setStoredTheme(selectedTheme)
+          ThemeManager.setTheme(selectedTheme)
+        }
+      })
+    })
   })
   
   // Monitorar mudanças no sistema operacional
