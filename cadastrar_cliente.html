@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="pt-BR" class="h-100" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Cadastrar Cliente" />
+    <title>Cadastrar Cliente - Sistema de Vendas</title>
+    <script src="assets/js/color-modes.js"></script>
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link href="sticky-footer-navbar.css" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
+  </head>
+  <body class="d-flex flex-column h-100">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">📊 Sistema de Vendas</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="listar_clientes.html">👥 Clientes</a></li>
+            <li class="nav-item"><a class="nav-link" href="listar_produto.html">📦 Produtos</a></li>
+            <li class="nav-item"><a class="nav-link" href="listar_pedido.html">🛒 Pedidos</a></li>
+            <li class="nav-item ms-2">
+              <button id="theme-toggle-btn" class="btn btn-light" title="Alternar tema">
+                <i class="bi bi-moon-fill"></i>
+                <span class="theme-text d-none d-md-inline">Escuro</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-shrink-0">
+      <div class="container py-5">
+        <div class="row">
+          <div class="col-lg-8 offset-lg-2">
+            <h1 class="mb-4">Cadastrar Novo Cliente</h1>
+            
+            <form id="formCliente">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="nome" class="form-label">Nome Completo *</label>
+                  <input type="text" class="form-control" id="nome" placeholder="João Silva" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="email" class="form-label">Email *</label>
+                  <input type="email" class="form-control" id="email" placeholder="joao@example.com" required>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="telefone" class="form-label">Telefone *</label>
+                  <input type="tel" class="form-control" id="telefone" placeholder="(11) 9999-9999" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="cpf" class="form-label">CPF *</label>
+                  <input type="text" class="form-control" id="cpf" placeholder="000.000.000-00" required>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="endereco" class="form-label">Endereço *</label>
+                  <input type="text" class="form-control" id="endereco" placeholder="Rua Principal, 123" required>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="cidade" class="form-label">Cidade *</label>
+                  <input type="text" class="form-control" id="cidade" placeholder="São Paulo" required>
+                </div>
+                <div class="col-md-3">
+                  <label for="estado" class="form-label">Estado *</label>
+                  <input type="text" class="form-control" id="estado" placeholder="SP" maxlength="2" required>
+                </div>
+                <div class="col-md-3">
+                  <label for="cep" class="form-label">CEP *</label>
+                  <input type="text" class="form-control" id="cep" placeholder="00000-000" required>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="observacoes" class="form-label">Observações</label>
+                <textarea class="form-control" id="observacoes" rows="3" placeholder="Adicione observações sobre o cliente..."></textarea>
+              </div>
+
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a href="listar_clientes.html" class="btn btn-secondary">Cancelar</a>
+                <button type="reset" class="btn btn-warning">Limpar</button>
+                <button type="submit" class="btn btn-primary">Salvar Cliente</button>
+              </div>
+            </form>
+
+            <div id="alertaMsg" class="alert alert-success mt-3" style="display: none;" role="alert"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-body-tertiary">
+      <div class="container">
+        <span class="text-body-secondary">&copy; 2026 Sistema de Vendas. Todos os direitos reservados.</span>
+      </div>
+    </footer>
+
+    <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+      document.getElementById('formCliente').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const cliente = {
+          id: Date.now(),
+          nome: document.getElementById('nome').value,
+          email: document.getElementById('email').value,
+          telefone: document.getElementById('telefone').value,
+          cpf: document.getElementById('cpf').value,
+          endereco: document.getElementById('endereco').value,
+          cidade: document.getElementById('cidade').value,
+          estado: document.getElementById('estado').value,
+          cep: document.getElementById('cep').value,
+          observacoes: document.getElementById('observacoes').value,
+          dataCadastro: new Date().toLocaleDateString('pt-BR')
+        };
+
+        let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+        clientes.push(cliente);
+        localStorage.setItem('clientes', JSON.stringify(clientes));
+
+        // Mostrar mensagem de sucesso
+        const alerta = document.getElementById('alertaMsg');
+        alerta.textContent = '✅ Cliente cadastrado com sucesso!';
+        alerta.style.display = 'block';
+
+        // Limpar formulário
+        document.getElementById('formCliente').reset();
+
+        // Redirecionar após 2 segundos
+        setTimeout(() => {
+          window.location.href = 'listar_clientes.html';
+        }, 2000);
+      });
+    </script>
+  </body>
+</html>

@@ -1,80 +1,96 @@
 /*!
- * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
- * Copyright 2011-2025 The Bootstrap Authors
- * Licensed under the Creative Commons Attribution 3.0 Unported License.
+ * Sistema de Tema Light/Dark para Sistema de Vendas
+ * Gerencia alternância de temas com persistência em localStorage
  */
 
 (() => {
   'use strict'
 
-  const getStoredTheme = () => localStorage.getItem('theme')
-  const setStoredTheme = theme => localStorage.setItem('theme', theme)
-
-  const getPreferredTheme = () => {
-    const storedTheme = getStoredTheme()
-    if (storedTheme) {
-      return storedTheme
+  // Gerenciador de Tema
+  const ThemeManager = {
+    LIGHT: 'light',
+    DARK: 'dark',
+    AUTO: 'auto',
+    
+    getStoredTheme: () => localStorage.getItem('sistema-vendas-theme'),
+    setStoredTheme: (theme) => localStorage.setItem('sistema-vendas-theme', theme),
+    
+    getPreferredTheme: function() {
+      const stored = this.getStoredTheme()
+      if (stored) return stored
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? this.DARK : this.LIGHT
+    },
+    
+    setTheme: function(theme) {
+      const effectiveTheme = theme === this.AUTO 
+        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? this.DARK : this.LIGHT)
+        : theme
+      
+      document.documentElement.setAttribute('data-bs-theme', effectiveTheme)
+      this.updateThemeButton(effectiveTheme)
+      this.dispatchThemeChangeEvent(effectiveTheme)
+    },
+    
+    toggleTheme: function() {
+      const current = this.getStoredTheme() || this.getPreferredTheme()
+      const next = current === this.DARK ? this.LIGHT : this.DARK
+      this.setStoredTheme(next)
+      this.setTheme(next)
+    },
+    
+    updateThemeButton: function(theme) {
+      const btn = document.getElementById('theme-toggle-btn')
+      if (!btn) return
+      
+      const icon = btn.querySelector('i')
+      const text = btn.querySelector('.theme-text')
+      
+      if (theme === this.DARK) {
+        btn.classList.add('btn-dark')
+        btn.classList.remove('btn-light')
+        if (icon) icon.className = 'bi bi-moon-fill'
+        if (text) text.textContent = 'Escuro'
+      } else {
+        btn.classList.add('btn-light')
+        btn.classList.remove('btn-dark')
+        if (icon) icon.className = 'bi bi-sun-fill'
+        if (text) text.textContent = 'Claro'
+      }
+    },
+    
+    dispatchThemeChangeEvent: function(theme) {
+      window.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }))
     }
-
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   }
-
-  const setTheme = theme => {
-    if (theme === 'auto') {
-      document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
-    } else {
-      document.documentElement.setAttribute('data-bs-theme', theme)
+  
+  // Inicializar tema na primeira carga
+  ThemeManager.setTheme(ThemeManager.getPreferredTheme())
+  
+  // Expor globalmente para uso em outros scripts
+  window.ThemeManager = ThemeManager
+  
+  // Listener para botão de alternância
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('theme-toggle-btn')
+    if (btn) {
+      btn.addEventListener('click', () => ThemeManager.toggleTheme())
     }
-  }
-
-  setTheme(getPreferredTheme())
-
-  const showActiveTheme = (theme, focus = false) => {
-    const themeSwitcher = document.querySelector('#bd-theme')
-
-    if (!themeSwitcher) {
-      return
-    }
-
-    const themeSwitcherText = document.querySelector('#bd-theme-text')
-    const activeThemeIcon = document.querySelector('.theme-icon-active use')
-    const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-    const svgOfActiveBtn = btnToActive.querySelector('svg use').getAttribute('href')
-
-    document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-      element.classList.remove('active')
-      element.setAttribute('aria-pressed', 'false')
+  })
+  
+  // Monitorar mudanças no sistema operacional
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      const stored = ThemeManager.getStoredTheme()
+      if (!stored) {
+        ThemeManager.setTheme(e.matches ? ThemeManager.DARK : ThemeManager.LIGHT)
+      }
     })
-
-    btnToActive.classList.add('active')
-    btnToActive.setAttribute('aria-pressed', 'true')
-    activeThemeIcon.setAttribute('href', svgOfActiveBtn)
-    const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`
-    themeSwitcher.setAttribute('aria-label', themeSwitcherLabel)
-
-    if (focus) {
-      themeSwitcher.focus()
-    }
   }
-
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    const storedTheme = getStoredTheme()
-    if (storedTheme !== 'light' && storedTheme !== 'dark') {
-      setTheme(getPreferredTheme())
-    }
-  })
-
-  window.addEventListener('DOMContentLoaded', () => {
-    showActiveTheme(getPreferredTheme())
-
-    document.querySelectorAll('[data-bs-theme-value]')
-      .forEach(toggle => {
-        toggle.addEventListener('click', () => {
-          const theme = toggle.getAttribute('data-bs-theme-value')
-          setStoredTheme(theme)
-          setTheme(theme)
-          showActiveTheme(theme, true)
-        })
-      })
-  })
 })()
+
+// Compatibilidade com color-modes.js antigo
+const getStoredTheme = () => localStorage.getItem('sistema-vendas-theme')
+const setStoredTheme = theme => localStorage.setItem('sistema-vendas-theme', theme)
+
+
+

@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="pt-BR" class="h-100" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Listar Pedidos" />
+    <title>Listar Pedidos - Sistema de Vendas</title>
+    <script src="assets/js/color-modes.js"></script>
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link href="sticky-footer-navbar.css" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
+  </head>
+  <body class="d-flex flex-column h-100">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">📊 Sistema de Vendas</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="listar_clientes.html">👥 Clientes</a></li>
+            <li class="nav-item"><a class="nav-link" href="listar_produto.html">📦 Produtos</a></li>
+            <li class="nav-item"><a class="nav-link" href="cadastrar_pedido.html">🛒 Novo Pedido</a></li>
+            <li class="nav-item ms-2">
+              <button id="theme-toggle-btn" class="btn btn-light" title="Alternar tema">
+                <i class="bi bi-moon-fill"></i>
+                <span class="theme-text d-none d-md-inline">Escuro</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-shrink-0">
+      <div class="container py-5">
+        <div class="row mb-4">
+          <div class="col-md-8">
+            <h1>🛒 Lista de Pedidos</h1>
+          </div>
+          <div class="col-md-4 text-end">
+            <a href="cadastrar_pedido.html" class="btn btn-primary">+ Novo Pedido</a>
+          </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="campoBusca" placeholder="Buscar por cliente...">
+          </div>
+          <div class="col-md-6">
+            <select class="form-select" id="filtroStatus">
+              <option value="">Filtrar por status...</option>
+              <option value="Pendente">Pendente</option>
+              <option value="Confirmado">Confirmado</option>
+              <option value="Enviado">Enviado</option>
+              <option value="Entregue">Entregue</option>
+              <option value="Cancelado">Cancelado</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Tabela de Pedidos -->
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>#ID</th>
+                <th>Cliente</th>
+                <th>Data</th>
+                <th>Status</th>
+                <th>Itens</th>
+                <th>Total</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="tabelaPedidos">
+              <tr>
+                <td colspan="7" class="text-center text-muted">Nenhum pedido cadastrado</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal de Detalhes -->
+    <div class="modal fade" id="modalDetalhes" tabindex="-1" aria-labelledby="modalDetalhesLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalDetalhesLabel">Detalhes do Pedido</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="detalhesConteudo"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-warning" id="btnEditarStatus">Editar Status</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Edição de Status -->
+    <div class="modal fade" id="modalEditarStatus" tabindex="-1" aria-labelledby="modalEditarStatusLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditarStatusLabel">Editar Status</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="editarStatusPedidoId">
+            <select class="form-select" id="novoStatus">
+              <option value="Pendente">Pendente</option>
+              <option value="Confirmado">Confirmado</option>
+              <option value="Enviado">Enviado</option>
+              <option value="Entregue">Entregue</option>
+              <option value="Cancelado">Cancelado</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" id="btnConfirmarEdicao">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-body-tertiary">
+      <div class="container">
+        <span class="text-body-secondary">&copy; 2026 Sistema de Vendas. Todos os direitos reservados.</span>
+      </div>
+    </footer>
+
+    <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+      function getStatusBadge(status) {
+        const badges = {
+          'Pendente': '<span class="badge bg-warning">Pendente</span>',
+          'Confirmado': '<span class="badge bg-info">Confirmado</span>',
+          'Enviado': '<span class="badge bg-primary">Enviado</span>',
+          'Entregue': '<span class="badge bg-success">Entregue</span>',
+          'Cancelado': '<span class="badge bg-danger">Cancelado</span>'
+        };
+        return badges[status] || '<span class="badge bg-secondary">Desconhecido</span>';
+      }
+
+      function obterNomeCliente(clienteId) {
+        const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+        const cliente = clientes.find(c => c.id === clienteId);
+        return cliente ? cliente.nome : 'Cliente não encontrado';
+      }
+
+      function carregarPedidos() {
+        const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+        const busca = document.getElementById('campoBusca').value.toLowerCase();
+        const status = document.getElementById('filtroStatus').value;
+        
+        let pedidosFiltrados = pedidos;
+        
+        if (busca) {
+          pedidosFiltrados = pedidosFiltrados.filter(p => {
+            const nomeCliente = obterNomeCliente(p.clienteId).toLowerCase();
+            return nomeCliente.includes(busca);
+          });
+        }
+        
+        if (status) {
+          pedidosFiltrados = pedidosFiltrados.filter(p => p.status === status);
+        }
+
+        const tbody = document.getElementById('tabelaPedidos');
+        
+        if (pedidosFiltrados.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">Nenhum pedido encontrado</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = pedidosFiltrados.map(pedido => `
+          <tr>
+            <td>#${pedido.id.toString().slice(-6)}</td>
+            <td>${obterNomeCliente(pedido.clienteId)}</td>
+            <td>${pedido.dataPedido}</td>
+            <td>${getStatusBadge(pedido.status)}</td>
+            <td>${pedido.produtos.length}</td>
+            <td>R$ ${pedido.total.toFixed(2).replace('.', ',')}</td>
+            <td>
+              <button class="btn btn-sm btn-info" onclick="abrirDetalhes(${pedido.id})">Detalhes</button>
+              <button class="btn btn-sm btn-danger" onclick="deletarPedido(${pedido.id})">Deletar</button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      function abrirDetalhes(pedidoId) {
+        const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+        const pedido = pedidos.find(p => p.id === pedidoId);
+        
+        if (pedido) {
+          const html = `
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <strong>ID do Pedido:</strong> #${pedido.id.toString().slice(-6)}<br>
+                <strong>Cliente:</strong> ${obterNomeCliente(pedido.clienteId)}<br>
+                <strong>Data:</strong> ${pedido.dataPedido}<br>
+                <strong>Status:</strong> ${getStatusBadge(pedido.status)}
+              </div>
+              <div class="col-md-6">
+                <strong>Data Prevista:</strong> ${pedido.dataPrevista || 'Não definida'}<br>
+                <strong>Desconto:</strong> ${pedido.desconto}%<br>
+                <strong>Subtotal:</strong> R$ ${pedido.subtotal.toFixed(2).replace('.', ',')}<br>
+                <strong>Desconto (R$):</strong> R$ ${pedido.descontoValor.toFixed(2).replace('.', ',')}
+              </div>
+            </div>
+            <hr>
+            <h6>Produtos:</h6>
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th>Qtd</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${pedido.produtos.map(p => `
+                    <tr>
+                      <td>${p.nome}</td>
+                      <td>R$ ${p.preco.toFixed(2).replace('.', ',')}</td>
+                      <td>${p.quantidade}</td>
+                      <td>R$ ${(p.preco * p.quantidade).toFixed(2).replace('.', ',')}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+            <hr>
+            <div class="alert alert-info">
+              <strong>Total:</strong> R$ ${pedido.total.toFixed(2).replace('.', ',')}
+            </div>
+            ${pedido.observacoes ? `<p><strong>Observações:</strong> ${pedido.observacoes}</p>` : ''}
+          `;
+          
+          document.getElementById('detalhesConteudo').innerHTML = html;
+          document.getElementById('editarStatusPedidoId').value = pedidoId;
+          
+          const modal = new bootstrap.Modal(document.getElementById('modalDetalhes'));
+          modal.show();
+        }
+      }
+
+      document.getElementById('btnEditarStatus').addEventListener('click', function() {
+        bootstrap.Modal.getInstance(document.getElementById('modalDetalhes')).hide();
+        const modalEditarStatus = new bootstrap.Modal(document.getElementById('modalEditarStatus'));
+        modalEditarStatus.show();
+      });
+
+      document.getElementById('btnConfirmarEdicao').addEventListener('click', function() {
+        const pedidoId = parseInt(document.getElementById('editarStatusPedidoId').value);
+        const novoStatus = document.getElementById('novoStatus').value;
+        
+        let pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+        const index = pedidos.findIndex(p => p.id === pedidoId);
+        
+        if (index !== -1) {
+          pedidos[index].status = novoStatus;
+          localStorage.setItem('pedidos', JSON.stringify(pedidos));
+          bootstrap.Modal.getInstance(document.getElementById('modalEditarStatus')).hide();
+          carregarPedidos();
+        }
+      });
+
+      function deletarPedido(pedidoId) {
+        if (confirm('Tem certeza que deseja deletar este pedido?')) {
+          let pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+          pedidos = pedidos.filter(p => p.id !== pedidoId);
+          localStorage.setItem('pedidos', JSON.stringify(pedidos));
+          carregarPedidos();
+        }
+      }
+
+      document.getElementById('campoBusca').addEventListener('keyup', carregarPedidos);
+      document.getElementById('filtroStatus').addEventListener('change', carregarPedidos);
+
+      document.addEventListener('DOMContentLoaded', carregarPedidos);
+    </script>
+  </body>
+</html>

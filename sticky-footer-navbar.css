@@ -1,7 +1,25 @@
 /* Custom page CSS
 -------------------------------------------------- */
-/* Not required for template or sticky footer method. */
+/* Sticky footer with fixed navbar */
 
 main > .container {
   padding: 60px 15px 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.footer {
+  margin-top: auto;
+  flex-shrink: 0;
 }
