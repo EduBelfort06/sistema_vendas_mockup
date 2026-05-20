@@ -44,39 +44,46 @@ Um sistema completo de gestão de vendas desenvolvido com HTML5, CSS3, JavaScrip
   - Deletar pedido
 
 ### 📊 Dashboard
-- Resumo com totais:
+- **Resumo com totais:**
   - Total de clientes
   - Total de produtos
   - Total de pedidos
   - Valor total de vendas
-- Ações rápidas para acesso direto aos cadastros
+- **Ações rápidas** com estilo elegante para acesso direto aos cadastros
+- **Cards informativos** com acentos visuais diferenciados por tipo
 
 ## 🛠️ Tecnologias Utilizadas
 
 - **HTML5**: Estrutura semântica das páginas
-- **CSS3**: Estilos modernos e responsivos
-- **JavaScript (ES6+)**: Lógica da aplicação
+- **CSS3 com suporte a temas**: Estilos modernos, responsivos e tema light/dark
+- **JavaScript (ES6+)**: Lógica da aplicação e gerenciamento de tema
 - **Bootstrap 5**: Framework CSS para responsividade
-- **LocalStorage**: Armazenamento de dados no navegador
+- **LocalStorage**: Armazenamento de dados no navegador e preferências de tema
 
 ## 📁 Estrutura do Projeto
 
 ```
 sistema_vendas_mockup/
 ├── index.html                  # Página inicial (Dashboard)
-├── cadastrar_cliente.html      # Formulário de cadastro de cliente
-├── listar_clientes.html        # Lista e edição de clientes
-├── cadastrar_produto.html      # Formulário de cadastro de produto
-├── listar_produto.html         # Lista e edição de produtos
-├── cadastrar_pedido.html       # Formulário de criação de pedido
-├── listar_pedido.html          # Lista e edição de pedidos
 ├── sticky-footer-navbar.css    # CSS para layout com footer fixo
+├── DOCUMENTACAO.md             # Documentação detalhada do projeto
+├── GUIA-RAPIDO.md             # Guia rápido de uso
+├── pages/
+│   ├── cadastro/
+│   │   ├── cadastrar_cliente.html      # Formulário de cadastro de cliente
+│   │   ├── cadastrar_produto.html      # Formulário de cadastro de produto
+│   │   └── cadastrar_pedido.html       # Formulário de criação de pedido
+│   └── listas/
+│       ├── listar_clientes.html        # Lista e edição de clientes
+│       ├── listar_produto.html         # Lista e edição de produtos
+│       └── listar_pedido.html          # Lista e edição de pedidos
 ├── assets/
 │   ├── css/
-│   │   └── custom.css          # Estilos customizados
+│   │   └── custom.css          # Estilos customizados e paleta de cores
 │   ├── js/
-│   │   ├── color-modes.js      # Script de temas (claro/escuro)
-│   │   └── app.js              # Lógica principal da aplicação
+│   │   ├── color-modes.js      # Script de temas (claro/escuro com dropdown)
+│   │   ├── app.js              # Lógica principal da aplicação
+│   │   └── dados-exemplo.js    # Dados de exemplo para demonstração
 │   ├── dist/
 │   │   ├── css/
 │   │   │   └── bootstrap.min.css
@@ -97,9 +104,15 @@ sistema_vendas_mockup/
 
 **Via Menu de Navegação:**
 - Clique nos menus suspensos para acessar as seções de Clientes, Produtos e Pedidos
+- Use o **Dropdown de Tema** no navbar para alternar entre modo claro e escuro
 
 **Via Dashboard:**
-- Use os cards de resumo e os botões de "Ações Rápidas" para acesso direto
+- Use os cards de resumo e os botões de "Ações Rápidas" para acesso direto aos cadastros
+
+### Alternar Tema
+- Clique no botão com ícone de sol/lua no navbar
+- Selecione "Claro" ou "Escuro" no dropdown
+- A preferência será salva automaticamente
 
 ## 💾 Armazenamento de Dados
 
@@ -107,9 +120,10 @@ Todos os dados são armazenados no **LocalStorage** do navegador:
 
 ```javascript
 // Estrutura dos dados
-localStorage.getItem('clientes')   // Array de clientes
-localStorage.getItem('produtos')   // Array de produtos
-localStorage.getItem('pedidos')    // Array de pedidos
+localStorage.getItem('clientes')           // Array de clientes
+localStorage.getItem('produtos')           // Array de produtos
+localStorage.getItem('pedidos')            // Array de pedidos
+localStorage.getItem('sistema-vendas-theme')  // Preferência de tema (light/dark)
 ```
 
 ### Backup e Restauração
@@ -125,22 +139,50 @@ const dados = {
 console.log(JSON.stringify(dados, null, 2));
 ```
 
-## 🎨 Personalização
+## 🎨 Design e Personalização
 
-### Cores
+### 🌈 Paleta de Cores
+O sistema utiliza uma paleta clássica e elegante:
+- **Azul Marinho Principal**: `#0b2340` - Cor primária corporativa
+- **Branco**: `#ffffff` - Fundo do modo claro
+- **Preto/Cinza Escuro**: `#111111` - Textos e elementos primários
+- **Ouro Suave**: `#c2b68d` - Acentos elegantes
+
+Modo claro com fundo light e modo escuro com fundo marinho escuro (#08162f).
+
+### 🎛️ Seletor de Tema
+- **Dropdown no navbar** para seleção entre modo Claro e Escuro
+- Preferência salva em localStorage
+- Respeta preferência do sistema operacional como fallback
+
+### 💎 Acentos dos Cards
+Cada tipo de card possui um acento visual diferenciado:
+- Cards de clientes
+- Cards de produtos
+- Cards de pedidos
+- Cards de resumo/dashboard
+
+### Personalização Avançada
 Edite o arquivo `assets/css/custom.css` para alterar as cores:
 
 ```css
 :root {
-  --primary-color: #0d6efd;
-  --secondary-color: #6c757d;
-  --success-color: #198754;
-  /* ... */
+  /* Paleta: Azul Marinho, Branco, Preto - estilo clássico */
+  --primary-color: #0b2340;
+  --accent-color: #c2b68d;
+  --bg-primary: #ffffff;      /* Fundo claro */
+  --text-primary: #111111;
+}
+
+/* Dark Mode */
+[data-bs-theme="dark"] {
+  --bg-secondary: #08162f;    /* Fundo escuro */
+  --text-primary: #eef2f8;    /* Texto claro */
 }
 ```
 
 ### Fontes
-Modifique a propriedade `font-family` em `custom.css`
+Modifique a propriedade `font-family` em `custom.css` para usar diferentes tipografias
 
 ## 🔒 Segurança
 
@@ -160,30 +202,30 @@ O sistema é totalmente responsivo e funciona em:
 ## 🐛 Validações
 
 O sistema realiza validações em:
-- **Email**: Formato válido
+- **Email**: Formato válido (RFC 5322)
 - **CPF**: Algoritmo de validação do CPF
-- **Telefone**: Formatação automática
-- **Campos obrigatórios**: Todos os formulários
+- **Telefone**: Formatação automática e validação de tamanho
+- **Campos obrigatórios**: Todos os formulários possuem validação de obrigatoriedade
+- **Valores monetários**: Validação de formato de moeda (Real)
 
-## 📊 Relatórios e Exportação
+## 📊 Gerenciamento de Tema
 
-Use as funções disponíveis no `app.js`:
+O sistema de tema é gerenciado por `assets/js/color-modes.js`:
 
 ```javascript
-// Resumo do Dashboard
-Relatorio.gerarResumoDashboard();
+// Alternar para modo escuro
+ThemeManager.setTheme('dark');
 
-// Relatório de Vendas
-Relatorio.gerarRelatorioVendas();
+// Alternar para modo claro
+ThemeManager.setTheme('light');
 
-// Relatório de Estoque
-Relatorio.gerarRelatorioEstoque();
+// Obter tema atual
+ThemeManager.getStoredTheme();
 
-// Exportar em CSV
-Exportar.exportarCSV(dados, 'nome_arquivo');
-
-// Exportar em JSON
-Exportar.exportarJSON(dados, 'nome_arquivo');
+// Escutar mudanças de tema
+window.addEventListener('themechange', (e) => {
+  console.log('Novo tema:', e.detail.theme);
+});
 ```
 
 ## 🎯 Funcionalidades Futuras
@@ -191,12 +233,14 @@ Exportar.exportarJSON(dados, 'nome_arquivo');
 - [ ] Login e autenticação de usuários
 - [ ] Backend com Node.js/Express
 - [ ] Banco de dados (MongoDB/PostgreSQL)
-- [ ] Relatórios mais detalhados
-- [ ] Gráficos e análises
+- [ ] Relatórios detalhados com gráficos
+- [ ] Análises de vendas e trends
 - [ ] Integração com gateways de pagamento
-- [ ] Nota fiscal eletrônica
-- [ ] SMS/Email de confirmação
-- [ ] App mobile
+- [ ] Geração de Nota Fiscal Eletrônica (NFe)
+- [ ] Notificações por SMS/Email
+- [ ] Progressive Web App (PWA) para offline
+- [ ] App mobile (React Native/Flutter)
+- [ ] Integração com APIs externas (CEP, validação de documentos)
 
 ## 📝 Licença
 
@@ -210,7 +254,15 @@ Desenvolvido como sistema educacional de gestão de vendas.
 
 Para dúvidas ou sugestões sobre o sistema, consulte a documentação inline no código ou entre em contato.
 
----
 
-**Última atualização**: 18 de maio de 2026
-**Versão**: 1.0.0
+
+**Última atualização**: 19 de maio de 2026
+**Versão**: 1.2.0
+
+### Changelog v1.2.0
+- ✨ Novo dropdown para seleção de tema (claro/escuro)
+- 🎨 Paleta de cores refinada: azul marinho, branco e preto com estilo elegante
+- 🔄 Fundo corrigido no modo escuro com cores homogêneas
+- 🎯 Acentos visuais diferenciados em cards por tipo
+- 📁 Reorganização de arquivos em pastas (pages/cadastro e pages/listas)
+- 🚀 Ações rápidas padronizadas com paleta primária

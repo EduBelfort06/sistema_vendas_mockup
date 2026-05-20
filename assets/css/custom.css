@@ -142,7 +142,6 @@ main.flex-shrink-0 {
   color: var(--text-primary);
 }
 
-/* ========== TABLES ========== */
 
 /* ========== TABLES ========== */
 .table-responsive {
@@ -183,7 +182,6 @@ main.flex-shrink-0 {
   background-color: rgba(255, 255, 255, 0.02);
 }
 
-/* ========== FORMS ========== */
 
 /* ========== FORMS ========== */
 .form-control,
@@ -321,7 +319,6 @@ main.flex-shrink-0 {
   color: #ffffff !important;
 }
 
-/* ========== MODAL ========== */
 
 /* ========== MODAL ========== */
 .modal-content {
@@ -587,7 +584,6 @@ h1, h2, h3, h4, h5, h6 {
   color: #ffffff;
 }
 
-/* ========== RESPONSIVE ========== */
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
